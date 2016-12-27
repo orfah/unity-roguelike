@@ -62,6 +62,14 @@ public class GameManager : MonoBehaviour {
 		levelImage.SetActive (true);
 		enabled = false;
 	}
+
+	public void Reset() {
+		level = 0;
+		playerFoodPoints = 100;
+		playersTurn = true;
+		enemiesMoving = false;
+		enabled = true;
+	}
 	
 	void Update() {
 		if (playersTurn || enemiesMoving || doingSetup) {

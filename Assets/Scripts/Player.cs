@@ -8,6 +8,7 @@ public class Player : MovingObject {
 	public int pointsPerFood = 10;
 	public int pointsPerSoda = 20;
 	public float restartLevelDelay = 1f;
+	public float gameOverRestartDelay = 2f;
 
 	public Text foodText;
 
@@ -123,6 +124,13 @@ public class Player : MovingObject {
 		SceneManager.LoadScene (0);
 	}
 
+	private void RestartGame() {
+		GameManager.instance.Reset ();
+		SoundManager.instance.musicSource.Play ();
+		food = GameManager.instance.playerFoodPoints;
+		Restart ();
+	}
+
 	public void LoseFood(int loss) {
 		animator.SetTrigger ("playerHit");
 		food -= loss;
@@ -135,6 +143,8 @@ public class Player : MovingObject {
 			GameManager.instance.GameOver ();
 			SoundManager.instance.PlaySingle (gameOverSound);
 			SoundManager.instance.musicSource.Stop ();
+			Invoke ("RestartGame", gameOverRestartDelay);
+
 		}
 	}
 }
