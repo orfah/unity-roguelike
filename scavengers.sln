@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{CEE6F29C-6415-8084-DEF4-330510CBE812}") = "scavengers", "Assembly-CSharp.csproj", "{07057D98-6C15-A3A3-2353-5B38D3C4D777}"
+EndProject
+Project("{CEE6F29C-6415-8084-DEF4-330510CBE812}") = "scavengers", "Assembly-CSharp-Editor.csproj", "{CF61B26D-9CCC-B98B-D585-55BC9E0F1114}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07057D98-6C15-A3A3-2353-5B38D3C4D777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07057D98-6C15-A3A3-2353-5B38D3C4D777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07057D98-6C15-A3A3-2353-5B38D3C4D777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07057D98-6C15-A3A3-2353-5B38D3C4D777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF61B26D-9CCC-B98B-D585-55BC9E0F1114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF61B26D-9CCC-B98B-D585-55BC9E0F1114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF61B26D-9CCC-B98B-D585-55BC9E0F1114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF61B26D-9CCC-B98B-D585-55BC9E0F1114}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
