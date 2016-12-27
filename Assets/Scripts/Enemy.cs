@@ -16,27 +16,28 @@ public class Enemy : MovingObject {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		base.Start ();
 	}
-		
-	protected override void AttemptMove<T> (int xDir, int yDir) {
+
+	public void MoveEnemy() {
 		if (skipMove) {
 			skipMove = false;
 			return;
 		}
-		base.AttemptMove<T> (xDir, yDir);
-		skipMove = true; 
-	}
 
-	public void MoveEnemy() {
 		int xDir = 0;
 		int yDir = 0;
 
-		if (Mathf.Abs (target.position.x - transform.position.x) < float.Epsilon) {
+		bool moved = false;
+		if (Mathf.Abs (target.position.y - transform.position.y) > float.Epsilon) {
 			yDir = target.position.y > transform.position.y ? 1 : -1;
-		} else {
+			moved = AttemptMove<Player> (xDir, yDir);
+		}
+		
+		if (!moved && Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon) {
 			xDir = target.position.x > transform.position.x ? 1 : -1;
+			AttemptMove<Player> (xDir, 0);
 		}
 
-		AttemptMove<Player> (xDir, yDir);
+		skipMove = true;
 	}
 
 	protected override void OnCantMove<T> (T component) {

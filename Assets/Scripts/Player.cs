@@ -98,7 +98,7 @@ public class Player : MovingObject {
 		}
 	}
 
-	protected override void AttemptMove<T> (int xDir, int yDir)
+	protected override bool AttemptMove<T> (int xDir, int yDir)
 	{
 		food--; 
 		foodText.text = "Food: " + food;
@@ -111,6 +111,7 @@ public class Player : MovingObject {
 
 		CheckIfGameOver ();
 		GameManager.instance.playersTurn = false;
+		return true;
 	}
 
 	protected override void OnCantMove<T> (T component)
