@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 	public BoardManager boardScript;
+
 	public int playerFoodPoints = 100;
 	[HideInInspector] public bool playersTurn = true;
 
 	public float levelStartDelay = 2f;
+	public float gameOverRestartDelay = 2f;
 	public float turnDelay = .1f;
+
 	private List<Enemy> enemies;
 	private bool enemiesMoving;
 
@@ -18,6 +23,8 @@ public class GameManager : MonoBehaviour {
 	private Text levelText;
 	private GameObject levelImage;
 	private bool doingSetup;
+
+	public AudioClip gameOverSound;
 
 	// Use this for initialization
 	void Awake () {
@@ -28,7 +35,6 @@ public class GameManager : MonoBehaviour {
 		}
 
 		enemies = new List<Enemy> ();
-
 		DontDestroyOnLoad (gameObject);
 		boardScript = GetComponent<BoardManager> ();
 		initGame ();
@@ -61,14 +67,29 @@ public class GameManager : MonoBehaviour {
 		levelText.text = "After surviving " + level + " days, you starved.";
 		levelImage.SetActive (true);
 		enabled = false;
+
+		SoundManager.instance.PlaySingle (gameOverSound);
+		SoundManager.instance.musicSource.Stop ();
+		Invoke ("ResetGame", gameOverRestartDelay);
 	}
 
-	public void Reset() {
+	public void ResetGame() {
 		level = 0;
 		playerFoodPoints = 100;
 		playersTurn = true;
 		enemiesMoving = false;
+
+		SoundManager.instance.musicSource.Play ();
 		enabled = true;
+
+		Player p = GameObject.Find ("Player").GetComponent<Player>();
+		p.Food(playerFoodPoints);
+		
+		Restart ();
+	}
+
+	public void Restart() {
+		SceneManager.LoadScene (0);
 	}
 	
 	void Update() {

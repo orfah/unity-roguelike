@@ -4,11 +4,12 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Player : MovingObject {
+	public static Player instance = null;
+
 	public int wallDamage = 1;
 	public int pointsPerFood = 10;
 	public int pointsPerSoda = 20;
 	public float restartLevelDelay = 1f;
-	public float gameOverRestartDelay = 2f;
 
 	public Text foodText;
 
@@ -21,10 +22,9 @@ public class Player : MovingObject {
 	public AudioClip eatSound2;
 	public AudioClip drinkSound1;
 	public AudioClip drinkSound2;
-	public AudioClip gameOverSound;
 
 	private Vector2 touchOrigin = -Vector2.one;
-	
+
 	protected override void Start () {
 		animator = GetComponent<Animator> ();
 		food = GameManager.instance.playerFoodPoints;
@@ -32,6 +32,10 @@ public class Player : MovingObject {
 		foodText = GameObject.Find ("FoodText").GetComponent<Text> ();
 		foodText.text = "Food: " + food;
 		base.Start ();
+	}
+
+	public void Food(int f) {
+		food = f;
 	}
 
 	private void OnDisable() {
@@ -83,7 +87,7 @@ public class Player : MovingObject {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Exit") {
-			Invoke("Restart", restartLevelDelay);
+			GameManager.instance.Restart ();
 			enabled = false;
 		} else if (other.tag == "Food") {
 			food += pointsPerFood;
@@ -120,17 +124,6 @@ public class Player : MovingObject {
 		hitWall.DamageWall (wallDamage);
 		animator.SetTrigger ("playerChop");
 	}
-		
-	private void Restart() {
-		SceneManager.LoadScene (0);
-	}
-
-	private void RestartGame() {
-		GameManager.instance.Reset ();
-		SoundManager.instance.musicSource.Play ();
-		food = GameManager.instance.playerFoodPoints;
-		Restart ();
-	}
 
 	public void LoseFood(int loss) {
 		animator.SetTrigger ("playerHit");
@@ -142,10 +135,6 @@ public class Player : MovingObject {
 	private void CheckIfGameOver() {
 		if (food <= 0) {
 			GameManager.instance.GameOver ();
-			SoundManager.instance.PlaySingle (gameOverSound);
-			SoundManager.instance.musicSource.Stop ();
-			Invoke ("RestartGame", gameOverRestartDelay);
-
 		}
 	}
 }
